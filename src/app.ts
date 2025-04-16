@@ -3,7 +3,9 @@ import dotenv from 'dotenv';
 import cors from "cors";
 import mongoose from "mongoose";
 import authRoutes from "./routes/authRoutes"; 
-import userRoutes from "./routes/userRoutes"; 
+import userRoutes from "./routes/userRoutes";
+import taskRoutes from "./routes/taskRoutes";
+import dailyUpdateRoutes from "./routes/dailyUpdateRoutes"; 
 
 dotenv.config();
 
@@ -16,6 +18,9 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);  
 app.use("/api/user", userRoutes);  
+app.use("/api/tasks", taskRoutes);
+app.use("/api/daily-updates", dailyUpdateRoutes);
+
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URL || "")
   .then(() => console.log("MongoDB Connected"))
