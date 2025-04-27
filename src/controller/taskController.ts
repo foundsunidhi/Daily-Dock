@@ -32,12 +32,3 @@ export const updateTask = async (req: Request, res: Response) => {
   }
 };
 
-// Delete a Task
-export const deleteTask = async (req: Request, res: Response) => {
-  try {
-    const task = await Task.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: "Task deleted successfully", task });
-  } catch (error) {
-    res.status(400).json({ message: "Error deleting task", error });
-  }
-};

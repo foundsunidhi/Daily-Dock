@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { register, login } from "../controller/authController";
+import { register, login, updateEmpCode } from "../controller/authController";
 
 const router = express.Router();
 
@@ -16,6 +16,14 @@ router.post("/register", async (req: Request, res: Response) => {
 router.post("/login", async (req: Request, res: Response) => {
   try {
     await login(req, res);  // Calling the login function
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+});
+
+router.put("/update-empcode/:id", async (req: Request, res: Response) => {
+  try {
+    await updateEmpCode(req, res);  // Calling the updateEmpCode function
   } catch (error) {
     res.status(500).json({ message: "Server Error", error });
   }

@@ -22,22 +22,3 @@ export const getDailyUpdates = async (req: Request, res: Response) => {
   }
 };
 
-// Update a Daily Update
-export const updateDailyUpdate = async (req: Request, res: Response) => {
-  try {
-    const dailyUpdate = await DailyUpdate.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.status(200).json(dailyUpdate);
-  } catch (error) {
-    res.status(400).json({ message: "Error updating daily update", error });
-  }
-};
-
-// Delete a Daily Update
-export const deleteDailyUpdate = async (req: Request, res: Response) => {
-  try {
-    const dailyUpdate = await DailyUpdate.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: "Daily update deleted successfully", dailyUpdate });
-  } catch (error) {
-    res.status(400).json({ message: "Error deleting daily update", error });
-  }
-};

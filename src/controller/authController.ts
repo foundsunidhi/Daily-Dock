@@ -29,11 +29,7 @@ export const register = async (req: Request, res: Response) => {
 
   // Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Create new user in the database
   const user = await User.create({ name, email, empCode, role, password: hashedPassword });
-
-  // Return success message
   res.status(201).json({ message: "User registered successfully" });
 };
 
@@ -68,4 +64,30 @@ export const login = async (req: Request, res: Response) => {
       email: user.email,
     },
   });
+};
+
+// Update empCode
+export const updateEmpCode = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { empCode } = req.body;
+
+  // Validate empCode format
+  if (!/^viskk\d{4}$/.test(empCode)) {
+    return res.status(400).json({ message: "empCode must be in the format viskkXXXX" });
+  }
+
+  // Check if empCode already exists
+  const empExists = await User.findOne({ empCode });
+  if (empExists) {
+    return res.status(400).json({ message: "empCode already taken" });
+  }
+
+  // Find the user by ID and update empCode
+  const user = await User.findByIdAndUpdate(id, { empCode }, { new: true });
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.json({ message: "empCode updated successfully", user });
 };
