@@ -1,7 +1,7 @@
 import express, { RequestHandler } from "express";
-import { homePage, getProfile } from "../controller/userController";
+import { homePage, getProfile, updateEmpCode } from "../controller/userController";
 import { protect } from "../middleware/authMiddleware";
-import { updateEmpCode } from "../controller/userController";
+
 
 const router = express.Router();
 
