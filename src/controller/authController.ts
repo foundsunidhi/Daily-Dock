@@ -47,21 +47,21 @@ export const register = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "empCode already taken" });
     }
 
-    const emailExists = await User.findOne({ email });
-    if (emailExists) {
-      return res.status(400).json({ message: "Email already registered" });
-    }
+    //const emailExists = await User.findOne({ email });
+    //if (emailExists) {
+    // return res.status(400).json({ message: "Email already registered" });
+    //}
 
     const tempPassword = generateRandomPassword();
-    const hashedPassword = await bcrypt.hash(tempPassword, 10);
 
     const user = await User.create({
       name,
       email,
       empCode,
       role,
-      password: hashedPassword,
+      password: tempPassword,
     });
+    await user.save();
 
     const mailOptions = {
       from: `"VISKK Admin" <${process.env.EMAIL_USER}>`,
