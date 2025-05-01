@@ -22,7 +22,7 @@ router.post("/login", async (req: Request, res: Response) => {
 });
 
 
-router.put("/change-password/:empCode", async (req: Request, res: Response) => {
+router.post("/change-password/:empCode", async (req: Request, res: Response) => {
   try {
     await changePassword(req, res);  // Calling the changePassword function
   } catch (error) {

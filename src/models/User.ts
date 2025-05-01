@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   empCode: { type: String, required: true, unique: true,match: /^viskk\d{4}$/, },
   role: { type: String, required: true },
   password: { type: String, required: true },
-}, { timestamps: true });
+  }, { timestamps: true });
 
 // Pre-save middleware to hash the password before saving
 userSchema.pre("save", async function (next) {
