@@ -3,14 +3,13 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User";
 import nodemailer from "nodemailer";
-import crypto from "crypto";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || "secret123";
 
-// Generate a random password
+// Generate a random password (default 8 characters)
 const generateRandomPassword = (length = 8) => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let password = '';
@@ -20,29 +19,29 @@ const generateRandomPassword = (length = 8) => {
   return password;
 };
 
-// Email transporter setup (use environment variables)
+// Email transporter setup
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
+    pass: process.env.EMAIL_PASS,
+  },
 });
 
-// Verify connection
 transporter.verify((error) => {
   if (error) {
-    console.error('Email transporter error:', error);
+    console.error("Email transporter error:", error);
   } else {
-    console.log('Email server ready');
+    console.log("Email server ready");
   }
 });
 
-// Register function
+//  REGISTER 
 export const register = async (req: Request, res: Response) => {
   const { name, email, empCode, role } = req.body;
 
   try {
+    // Validate empCode format
     if (!/^viskk\d{4}$/.test(empCode)) {
       return res.status(400).json({ message: "empCode must be in the format viskkXXXX" });
     }
@@ -52,22 +51,20 @@ export const register = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "empCode already taken" });
     }
 
-    //const emailExists = await User.findOne({ email });
-    //if (emailExists) {
-    // return res.status(400).json({ message: "Email already registered" });
-    //}
-
+    // Generate and hash password
     const tempPassword = generateRandomPassword();
+    const hashedPassword = await bcrypt.hash(tempPassword, 10);
 
+    // Create user
     const user = await User.create({
       name,
       email,
       empCode,
       role,
-      password: tempPassword,
+      password: hashedPassword,
     });
-    await user.save();
 
+    // Send password via email
     const mailOptions = {
       from: `"VISKK Admin" <${process.env.EMAIL_USER}>`,
       to: email,
@@ -80,13 +77,13 @@ Your password is: ${tempPassword}
 You can log in using this password and change it later if you'd like.
 
 Best regards,
-VISKK Team`
+VISKK Team`,
     };
 
     await transporter.sendMail(mailOptions);
 
     res.status(201).json({
-      message: "User registered successfully. Please check your email for the password."
+      message: "User registered successfully. Please check your email for the password.",
     });
   } catch (error) {
     console.error("Registration error:", error);
@@ -94,7 +91,7 @@ VISKK Team`
   }
 };
 
-// Login function
+//  LOGIN 
 export const login = async (req: Request, res: Response) => {
   const { empCode, password } = req.body;
 
@@ -128,7 +125,7 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-// Update empCode function
+//  UPDATE EMP CODE 
 export const updateEmpCode = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { empCode } = req.body;
@@ -155,7 +152,7 @@ export const updateEmpCode = async (req: Request, res: Response) => {
   }
 };
 
-// Change Password
+//  CHANGE PASSWORD 
 export const changePassword = async (req: Request, res: Response) => {
   const { empCode } = req.params;
   const { oldPassword, newPassword } = req.body;
@@ -173,12 +170,12 @@ export const changePassword = async (req: Request, res: Response) => {
 
     res.json({ message: "Password updated successfully" });
   } catch (err) {
-    console.error(err);
+    console.error("Change password error:", err);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-// Get Profile
+// GET PROFILE 
 export const getUserProfile = async (req: Request, res: Response) => {
   const { empCode } = req.params;
 
@@ -188,7 +185,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
 
     res.json({ user });
   } catch (err) {
-    console.error(err);
+    console.error("Get profile error:", err);
     res.status(500).json({ message: "Server error" });
   }
 };

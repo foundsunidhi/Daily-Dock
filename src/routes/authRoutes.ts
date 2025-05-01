@@ -21,13 +21,6 @@ router.post("/login", async (req: Request, res: Response) => {
   }
 });
 
-router.put("/update-empcode/:id", async (req: Request, res: Response) => {
-  try {
-    await updateEmpCode(req, res);  // Calling the updateEmpCode function
-  } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
-  }
-});
 
 router.put("/change-password/:empCode", async (req: Request, res: Response) => {
   try {
@@ -38,6 +31,15 @@ router.put("/change-password/:empCode", async (req: Request, res: Response) => {
 }); 
 
 
+router.put("/update-empcode/:id", async (req: Request, res: Response) => {
+  try {
+    await updateEmpCode(req, res);  // Calling the updateEmpCode function
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+});
+
+
 router.get("/profile/:empCode", async (req: Request, res: Response) => {
   try {
     await getUserProfile(req, res);  // Calling the getUserProfile function
@@ -45,6 +47,5 @@ router.get("/profile/:empCode", async (req: Request, res: Response) => {
     res.status(500).json({ message: "Server Error", error });
   }
 });  
-
 
 export default router;
