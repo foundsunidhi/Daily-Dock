@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-
+ 
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || "secret123";

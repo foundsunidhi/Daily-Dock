@@ -3,7 +3,7 @@ import { createDailyUpdate, getDailyUpdates } from "../controller/dailyUpdateCon
 
 const router = express.Router();
 
-router.post("/daily-updates", createDailyUpdate);
-router.get("/daily-updates", getDailyUpdates);
+router.post("/dailyupdates", createDailyUpdate);
+router.get("/getdailyupdates", getDailyUpdates);
 
 export default router;
