@@ -1,9 +1,9 @@
 import express from "express";
-import { createDailyUpdate, getDailyUpdates } from "../controller/dailyUpdateController";
+import { createDailyUpdate, getDailyUpdatesByProject } from "../controller/dailyUpdateController";
 
 const router = express.Router();
 
-router.post("/dailyupdates", createDailyUpdate);
-router.get("/getdailyupdates", getDailyUpdates);
+router.post("/dailyupdate", createDailyUpdate); // Use just '/' here
+router.get("/project/:project", getDailyUpdatesByProject);
 
 export default router;
