@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema({
+  project: { type: String, required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
   startDate: { type: Date, required: true },

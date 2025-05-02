@@ -4,8 +4,8 @@ import DailyUpdate from "../models/DailyUpdate";
 // Create a Daily Update
 export const createDailyUpdate = async (req: Request, res: Response) => {
   try {
-    const { description, date, userId } = req.body;
-    const dailyUpdate = await DailyUpdate.create({ description, date, userId });
+    const { project, description, date, userId } = req.body;
+    const dailyUpdate = await DailyUpdate.create({ project, description, date, userId });
     res.status(201).json(dailyUpdate);
   } catch (error) {
     res.status(400).json({ message: "Error creating daily update", error });

@@ -4,8 +4,8 @@ import Task from "../models/Task";
 // Create a Task
 export const createTask = async (req: Request, res: Response) => {
   try {
-    const { title, description, startDate, dueDate, userId } = req.body;
-    const task = await Task.create({ title, description, startDate, dueDate, userId });
+    const { project, title, description, startDate, dueDate, userId } = req.body;
+    const task = await Task.create({ project, title, description, startDate, dueDate, userId });
     res.status(201).json(task);
   } catch (error) {
     res.status(400).json({ message: "Error creating task", error });
