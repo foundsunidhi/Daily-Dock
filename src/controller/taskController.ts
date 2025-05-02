@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Task from "../models/Task";
 
-// Create a Task
+
 export const createTask = async (req: Request, res: Response) => {
   try {
     const { project, title, description, startDate, dueDate, userId } = req.body;
@@ -12,7 +12,7 @@ export const createTask = async (req: Request, res: Response) => {
   }
 };
 
-// Get all Tasks
+
 export const getTasks = async (req: Request, res: Response) => {
   try {
     const tasks = await Task.find().populate("userId", "name");
@@ -22,7 +22,7 @@ export const getTasks = async (req: Request, res: Response) => {
   }
 };
 
-// Update a Task
+
 export const updateTask = async (req: Request, res: Response) => {
   try {
     const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });

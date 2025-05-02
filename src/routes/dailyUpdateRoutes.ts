@@ -3,7 +3,7 @@ import { createDailyUpdate, getDailyUpdatesByProject } from "../controller/daily
 
 const router = express.Router();
 
-router.post("/dailyupdate", createDailyUpdate); // Use just '/' here
+router.post("/dailyupdate", createDailyUpdate); 
 router.get("/project/:project", getDailyUpdatesByProject);
 
 export default router;
