@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const dailyUpdateSchema = new mongoose.Schema({
-  project: { type: String, required: true },
+  projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true },
   description: { type: String, required: true },
   date: { type: Date, required: true },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
