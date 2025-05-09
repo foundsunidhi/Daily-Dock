@@ -3,8 +3,10 @@ import { createTask, getTasksByProject, updateTask } from "../controller/taskCon
 
 const router = express.Router();
 
-router.post("/tasks", createTask);
-router.post("/project/:project", getTasksByProject);  
-router.put("/:id", updateTask);
+// Define routes
+router.post("/", createTask);                // Create a task
+router.post("/by-project", getTasksByProject); // Fetch tasks by project
+router.put("/:id", updateTask);             // Update a task
 
+// Export the router
 export default router;
