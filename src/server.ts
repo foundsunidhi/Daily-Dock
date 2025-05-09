@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGODB_URL || 'your_mongo_connection_string', {
 });
 
 app.get('/', (req, res) => {
-  res.send('API is running...');
+  res.send('Chill the server is running :)');
 });
 
 app.listen(PORT, () => {
