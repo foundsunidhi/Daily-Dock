@@ -161,7 +161,10 @@ export const getUserProfile = async (req: Request, res: Response) => {
   const { empCode } = req.params;
 
   try {
-    const user = await User.findOne({ empCode }).select("-password");
+    const user = await User.findOne({ empCode })
+      .populate("role")  
+      .select("-password"); 
+
     if (!user) return res.status(404).json({ message: "User not found" });
 
     res.json({ user });

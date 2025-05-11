@@ -6,7 +6,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", createDailyUpdate); // create new update
-router.post("/by-project", getDailyUpdatesByProject); // fetch updates by projectId in body
+router.post("/", createDailyUpdate); 
+router.post("/by-project", getDailyUpdatesByProject); 
 
 export default router;
