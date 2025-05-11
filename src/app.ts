@@ -6,6 +6,8 @@ import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 import taskRoutes from "./routes/taskRoutes";
 import dailyUpdateRoutes from "./routes/dailyUpdateRoutes";
+import cookieParser from "cookie-parser";
+
 
 dotenv.config();
 
@@ -14,6 +16,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
@@ -26,3 +30,4 @@ mongoose.connect(process.env.MONGODB_URL || "")
   .catch(err => console.error("MongoDB Connection Error", err));
 
 export default app;
+

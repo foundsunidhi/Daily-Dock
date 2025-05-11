@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { register, login, updateEmpCode, changePassword, getUserProfile } from "../controller/authController";
+import { register, login, updateEmpCode, changePassword, getUserProfile, logout } from "../controller/authController";
 
 const router = express.Router();
 
@@ -42,5 +42,14 @@ router.get("/profile/:empCode", async (req: Request, res: Response) => {
     res.status(500).json({ message: "Server Error", error });
   }
 });  
+
+router.post("/logout", async (req: Request, res: Response) => {
+  try {
+    await logout(req, res);  
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+});
+
 
 export default router;

@@ -80,19 +80,26 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: "1d" });
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: "30d" });
 
-    res.json({
-      message: "Login successful",
-      token,
-      profile: {
-        id: user._id,
-        name: user.name,
-        empCode: user.empCode,
-        role: user.role,
-        email: user.email,
-      },
-    });
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "strict",
+  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+});
+
+res.json({
+  message: "Login successful",
+  profile: {
+    id: user._id,
+    name: user.name,
+    empCode: user.empCode,
+    role: user.role,
+    email: user.email,
+  },
+});
+
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Server error, please try again" });
@@ -161,5 +168,21 @@ export const getUserProfile = async (req: Request, res: Response) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+// Logout function
+export const logout = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: "lax", // or "strict" or "none" depending on your frontend setup
+      secure: process.env.NODE_ENV === "production", // only true in production
+    });
+
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error during logout", error });
   }
 };
