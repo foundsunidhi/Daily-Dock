@@ -17,7 +17,6 @@ export const getDailyUpdatesByProject = async (req: Request, res: Response) => {
   try {
     const updates = await DailyUpdate.find({ projectId })
       .populate("userId", "name email empCode")
-      .populate("taskId", "title description")
       .populate("projectId", "name description");
 
     res.status(200).json(updates);
