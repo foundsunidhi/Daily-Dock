@@ -45,7 +45,8 @@ export const register = async (req: Request, res: Response) => {
 
     const html = `
   <h3>Hello ${name},</h3>
-  <p>Welcome to our service! Your account has been created successfully.</p>
+  <p>Welcome to our service! </p>
+  <p>Your account has been created successfully.</p>
   <p>Your password is: <strong>${tempPassword}</strong></p>
   <p>You can log in using this password and change it later if you'd like.</p>
   <br/>
