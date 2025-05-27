@@ -1,4 +1,4 @@
-# 🗂️ Task Management Backend
+# 🗂️ Daily-Dock Backend
 
 This is the backend for a task and daily update management system built with Node.js, Express, TypeScript, and MongoDB.
 
